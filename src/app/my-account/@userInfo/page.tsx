@@ -9,7 +9,7 @@ export default async function MyAccountPage() {
     <div>
       <section>
         <h2>Account info</h2>
-        <h1>Welcome {customer.name}</h1>
+        <h1>Welcome {customer.firstName}</h1>
         <p>email: {customer.email}</p>
       </section>
     </div>
