@@ -14,17 +14,22 @@ export const handleCreateUser = async (formData: FormData) => {
   const variables = {
     input: {
       ...formDataObject,
-      phone: '+52' + formDataObject.phone
+      phone: '+1' + formDataObject.phone
     }
   }
 
-  const { customerCreate } = await graphqlClient.request(createUserMutation, variables)
-  const { customerUserErrors, customer } = customerCreate
-  if(customer?.firstName){
-    const accessToken = await createAccessToken(formDataObject.email as string, formDataObject.password as string)
-    if(accessToken){
-      redirect('/store')
+  const { customerCreate }: {
+    customerCreate: {
+      customer: {
+        firstName: string
+        email: string
+      }
     }
+  } = await graphqlClient.request(createUserMutation, variables)
+  const { customer } = customerCreate
+  if (customer?.firstName) {
+    await createAccessToken(formDataObject.email as string, formDataObject.password as string)
+    redirect('/store')
   }
 }
 
@@ -56,6 +61,7 @@ export const handleCreateCart = async (items: CartItem[]) => {
       }))
     }
   }
+  console.log("el id del merch ", variables.input.lines)
 
   const { cartCreate }: {
     cartCreate?: {

@@ -16,10 +16,8 @@ interface ProductViewItemsOrderProps{
 export const ProductViewItemsOrder = ({ maxQuantity,product } : ProductViewItemsOrderProps) => {
 
     const [counter, setCounter] = useState(1);
+    const { addToCart } = useShoppingCart()
 
-    const handleSubmit = (event: SyntheticEvent) => {
-      event.preventDefault();
-    };
 
     const handleSubtract = (event: SyntheticEvent) => {
       event.preventDefault();
@@ -33,7 +31,6 @@ export const ProductViewItemsOrder = ({ maxQuantity,product } : ProductViewItems
       setCounter(counter + 1);
     }
 
-    const { addToCart } = useShoppingCart()
     const handleAddToCart = (event: SyntheticEvent) => {
       event.preventDefault();
       addToCart({
@@ -41,6 +38,8 @@ export const ProductViewItemsOrder = ({ maxQuantity,product } : ProductViewItems
         price: product.price,
         quantity: counter,
         id: product.id,
+        image: product.image,
+        merchandiseId: product.gql_id
       });
     }
     return(
@@ -51,14 +50,13 @@ export const ProductViewItemsOrder = ({ maxQuantity,product } : ProductViewItems
           <button onClick={handleAdd}>+</button>
         </div>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleAddToCart}
           className={styles.ProductViewItemsOrder__form}
         >
           <button
             className={styles.ProductViewItemsOrder__submit}
             type="submit"
-            onClick={handleAddToCart}
-            >
+          >
             <FaCartShopping />
             <span>Add to cart</span>
           </button>

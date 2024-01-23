@@ -1,4 +1,4 @@
-import { gql } from "graphql-request"
+import { gql, request  } from "graphql-request"
 
 export const createCartMutation = gql`
 mutation cartCreate($input: CartInput) {
@@ -13,4 +13,5 @@ mutation cartCreate($input: CartInput) {
         }
     }
 }
+
 `

@@ -15,31 +15,34 @@ export const Chat = (props: {agent: string}) => {
       });
  
   return (
-    <main className={styles.Chat}>
-      <section className={styles.Chat__section}>
-        {messages
-        .filter(m => m.role !== 'system')
-        .map(m => (
-          <div>
-            {m.role === 'user' ? 'User: ' : 'AI: '}
-            {m.content}
-          </div>
-        ))}
-      </section>
-      <form className={styles.Chat__form} onSubmit={handleSubmit}>
+    <main className={styles.Chat} >
+      <form onSubmit={handleSubmit} className={styles.Chat__form}>
         <input
           className={styles.Chat__input}
           value={input}
           onChange={handleInputChange}
-          placeholder="Say something..."
+          placeholder="What would you like to buy?"
         />
         <button
           className={styles.Chat__button}
-          type="submit"
         >
           Send
         </button>
       </form>
+      <section className={styles.Chat__messages}>
+        {messages
+          .filter(m => m.role !== 'system')
+          .map(m => {
+            return (
+              <span key={m.id} className={styles.Chat__message}>
+                {m.role === "assistant" ? "🤖" : "👤"}
+                {m.content}
+              </span>
+            )
+          }
+
+          )}
+      </section>
     </main>
   );
 }
